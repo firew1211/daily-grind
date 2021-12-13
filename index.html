@@ -34,6 +34,16 @@
 			width:33%; /* approximate size taken on screen in maximum view */
 		}
 
+		.coffee-box{
+			min-height:250px;
+			float:left;
+			margin-right:2%;
+		}
+
+		.coffee-box img{
+			max-width:300px;
+		}
+
         h3.slogan{
            font-style:italic; /* make the slogan italics */ 
         }
@@ -45,7 +55,9 @@
 </head>
 <body>
 	<header>
-	    <img src="images/largebucks-logo.jpg" alt="You drink our coffee, we make large bucks!" class="flexible" id="logo" />
+	   
+		<img src="images/largebucks-logo.jpg" alt="You drink our coffee, we make large bucks!" class="flexible" id="logo" />
+		
 		<h1 class="masthead">LARGEBUCK$ COFFEE</h1>
 	</header>
     <main>
@@ -98,8 +110,8 @@
 			let myReturn = "";
 
 			myReturn += `<p>
-            <img src="images/${coffee.pic}" alt="${coffee.alt}" id="coffee" />
-           <strong>${coffee.weekday}'s Coffee Special:</strong> ${coffee.pic}'s daily coffee special is <strong>${coffee.coffee}</strong>, ${coffee.description}
+            <div class="coffee-box"><img src="images/${coffee.pic}" alt="${coffee.alt}" /></div>
+           <strong>${coffee.weekday}'s Coffee Special:</strong> ${coffee.weekday}'s daily coffee special is <strong>${coffee.coffee}</strong>, ${coffee.description}
        	</p>`;
 			return myReturn; 
 		}
@@ -112,6 +124,23 @@
 		
 		//separate querystring parameters
 		const urlParams = new URLSearchParams(queryString);
+
+		//check for the existence of a parameter:
+		if(urlParams.has('color')){
+    
+		//retrieve value of parameter
+		var myColor = urlParams.get('color');
+    
+		//show data on page
+		document.getElementById('color').innerHTML = myColor;
+		document.getElementById('color').style.backgroundColor = myColor;
+		}
+			
+		if(urlParams.has('price')){
+			var myPrice = urlParams.get('price');
+			document.getElementById('price').innerHTML = myPrice;
+		}
+
 	
 
 		let myDate = new Date();
@@ -119,27 +148,37 @@
 		let today = myDate.getDay;
 		let coffee = "";//will be an object
 
-		if(urlparams.has("day")){
-			today = urlparams.get("day");
+		if(urlParams.has("day")){
+			today = urlParams.get("day");
+			today = parseInt(today);
 		}
 
 		//TEST ONLY, DON'T LEAVE THIS LINE IN THE FINAL VERSION 
-		//today = 1,
+		//today = 0;
 
 		switch(today){
 			case 0:
-				today = "sunday";
+				today = "Sunday";
+
+				coffee = {
+				pic: "cold-brew.jpg", 
+					alt: "A pic of cold-brew",
+					color: "light black",
+					description: 'I luv cold brew!',
+					coffee:"Cold Brew",
+					weekday: "Sunday"
+				}
 			break;
 
 			case 1:
-				today = "monday";
+				today = "Monday";
 
 				coffee = {
-					pic: "bubble-tea.jpg", 
-					alt: "A pic of bubble tea",
-					color: "purple",
-					description: 'I luv bubble tea!',
-					coffee:"Bubble Tea",
+					pic: "drip.jpg", 
+					alt: "A pic of drip",
+					color: "black",
+					description: 'I luv drip!',
+					coffee:"Drip",
 					weekday: "monday"
 				}
 			break;
@@ -150,7 +189,7 @@
 				coffee = {
                     pic: "caramel-latte.jpg",
                     alt: "A pic of caramel latte",
-                    color: "gold",
+                    color: "light brown",
                     description: 'Our caramel latte!',
                     coffee:"Caramel Latte",
 					weekday: "Tuesday"
@@ -161,11 +200,11 @@
 				today = "wednesday";
 
 				coffee = {
-					pic: "pumpkin-spice-latte.jpg", 
-					alt: "pumpkin spice Latte",
+					pic: "frappaccino.jpg", 
+					alt: "A pic of frappaccino",
 					color: "orange",
-					description: 'pumpkin spice Lattes are awesome!',
-					coffee:"pumpkin spice Late",
+					description: 'Frappaccino are awesome!',
+					coffee:"Frappaccino",
 					weekday: "wednesday"
 				}
 			break;
@@ -175,7 +214,7 @@
 
 				coffee = {
 					pic: "pumpkin-spice-latte.jpg", 
-					alt: "pumpkin spice Latte",
+					alt: "A pic of pumpkin spice latte",
 					color: "orange",
 					description: 'pumpkin spice Lattes are awesome!',
 					coffee:"pumpkin spice Late",
@@ -185,10 +224,28 @@
 
 			case 5:
 				today = "Friday";
+
+				coffee = {
+					pic: "bubble-tea.jpg", 
+					alt: "A pic of bubble tea",
+					color: "purple",
+					description: 'I luv bubble tea!',
+					coffee:"Bubble Tea",
+					weekday: "Friday"
+				}
 			break;
 
 			case 6:
 				today = "Saturday";
+
+				coffee = {
+				pic: "mocha.jpg", 
+					alt: "A pic of mocha",
+					color: "silvier",
+					description: 'I luv mocha !',
+					coffee:"Mocha",
+					weekday: "Saturday"
+				}
 			break;
 
 			default:
@@ -198,7 +255,7 @@
 
 		document.getElementById("coffeeTarget").innerHTML = coffeeTemplate(coffee);
 
-		document.queryselector("html").style.backgroundColor = coffee.color;
+		document.querySelector("html").style.backgroundColor = coffee.color;
 
 
 		console.log(today);
