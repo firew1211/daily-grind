@@ -61,7 +61,8 @@
 		<h1 class="masthead">LARGEBUCK$ COFFEE</h1>
 	</header>
     <main>
-		 <header><h3 class="slogan">You drink our coffee, we make large bucks!</h3></header>
+	 <header><h3 class="slogan">You drink our coffee, we make large bucks!</h3></header>
+	 <h5>The purpose of this webpage is to use JavaScript to determine the coffee of the day.<br> This page presents a different image, custom message, and color based on each of the following days of the week:</h5>
 		<div id="coffeeTarget"></div>
 
 
@@ -145,7 +146,7 @@
 
 		let myDate = new Date();
 
-		let today = myDate.getDay;
+		let today = myDate.getDay();
 		let coffee = "";//will be an object
 
 		if(urlParams.has("day")){
